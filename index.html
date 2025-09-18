@@ -1,276 +1,439 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CV Thao LECOMTE</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CV Thao LECOMTE</title>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    * {
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family: 'Courier New', monospace;
+    }
+    body {
+      color: #66ff66;
+      background-color: #000;
+      overflow-x: hidden;
+      position:relative;
+    }
 
-<!-- Font Awesome -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    /* Fond futuriste */
+    #background {
+      position: fixed;
+      top:0;
+      left:0;
+      width:100%;
+      height:100%;
+      z-index:-2;
+      background: linear-gradient(135deg, #000 0%, #111 50%, #000 100%);
+      overflow: hidden;
+    }
+    .line {
+      position: absolute;
+      width: 2px;
+      height: 100%;
+      background: linear-gradient(to bottom, rgba(102,255,102,0), rgba(102,255,102,0.4), rgba(173,255,47,0.25), rgba(135,206,250,0.15));
+      animation: slide 6s linear infinite;
+    }
+    @keyframes slide {
+      0% { top: -100%; }
+      100% { top: 100%; }
+    }
 
-<style>
-* { margin:0; padding:0; box-sizing:border-box; font-family: 'Courier New', monospace; }
-body { color: #66ff66; background-color: #000; overflow-x: hidden; position:relative; }
+    /* Effet scanline CRT */
+    .scanlines {
+      pointer-events: none;
+      position: fixed;
+      top:0;
+      left:0;
+      width:100%;
+      height:100%;
+      z-index:-1;
+      background: repeating-linear-gradient(to bottom, rgba(255,255,255,0.03) 0px, rgba(0,0,0,0.08) 2px);
+      mix-blend-mode: overlay;
+    }
 
-/* Fond futuriste */
-#background { position: fixed; top:0; left:0; width:100%; height:100%; z-index:-2;
-background: linear-gradient(135deg, #000 0%, #111 50%, #000 100%); overflow: hidden; }
-.line { position: absolute; width: 2px; height: 100%;
-background: linear-gradient(to bottom, rgba(102,255,102,0), rgba(102,255,102,0.4), rgba(173,255,47,0.25), rgba(135,206,250,0.15));
-animation: slide 6s linear infinite; }
-@keyframes slide { 0% { top: -100%; } 100% { top: 100%; } }
+    /* Barre de navigation */
+    nav {
+      position: fixed;
+      top:0;
+      left:0;
+      width:100%;
+      background: rgba(0,0,0,0.9);
+      border-bottom: 2px solid #66ff66;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+    }
+    nav .logo {
+      font-size: 1.2em;
+      font-weight: bold;
+      color: #66ff66;
+      text-shadow: 0 0 6px rgba(102,255,102,0.6);
+    }
+    nav ul {
+      display: flex;
+      gap: 20px;
+      list-style: none;
+    }
+    nav ul li a {
+      color: #ffffff;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    nav ul li a:hover {
+      color: #66ff66;
+      text-shadow: 0 0 5px #66ff66;
+    }
 
-/* Effet scanline CRT */
-.scanlines { pointer-events: none; position: fixed; top:0; left:0; width:100%; height:100%; z-index:-1;
-background: repeating-linear-gradient(to bottom, rgba(255,255,255,0.03) 0px, rgba(0,0,0,0.08) 2px);
-mix-blend-mode: overlay; }
+    /* Menu burger */
+    .burger {
+      display: none;
+      font-size: 1.5em;
+      color: #66ff66;
+      cursor: pointer;
+    }
+    @media(max-width:768px){
+      nav ul {
+        display: none;
+        position: absolute;
+        top: 60px;
+        right: 0;
+        flex-direction: column;
+        background: rgba(0,0,0,0.95);
+        border-left: 2px solid #66ff66;
+        border-bottom: 2px solid #66ff66;
+        width: 200px;
+        padding: 10px;
+      }
+      nav ul.active {
+        display: flex;
+      }
+      .burger {
+        display: block;
+      }
+      .personal-info, .contact-icons {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
 
-/* Conteneur principal */
-.container { width: 90%; max-width: 1200px; margin: auto; padding: 20px; }
+    /* Conteneur principal */
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 100px auto 20px; /* 100px pour compenser la navbar fixe */
+      padding: 20px;
+    }
 
-/* Sections */
-section { margin-bottom: 30px; }
-h1,h2 { color: #66ff66; text-shadow: 0 0 2px #66ff66, 0 0 6px rgba(102,255,102,0.6); }
-h1 { font-size: 3em; margin-bottom: 10px; }
-h2 { font-size: 2em; display: flex; align-items: center; gap: 12px; margin-top: 40px; margin-bottom: 20px; }
-h2 i { color:#ffffff; transition: all 0.3s ease; }
-h2 i:hover { color:#66ff66; transform: scale(1.2); filter: drop-shadow(0 0 5px #66ff66); }
+    /* Sections */
+    section { margin-bottom: 30px; }
+    h1,h2 {
+      color: #66ff66;
+      text-shadow: 0 0 2px #66ff66, 0 0 6px rgba(102,255,102,0.6);
+    }
+    h1 {
+      font-size: 3em;
+      margin-bottom: 10px;
+    }
+    h2 {
+      font-size: 2em;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 40px;
+      margin-bottom: 20px;
+    }
+    h2 i {
+      color:#ffffff;
+      transition: all 0.3s ease;
+    }
+    h2 i:hover {
+      color:#66ff66;
+      transform: scale(1.2);
+      filter: drop-shadow(0 0 5px #66ff66);
+    }
 
-/* Blocs futuristes */
-.block { background-color: rgba(0, 0, 0, 0.6); border: 2px solid #66ff66; border-radius: 10px; padding:15px; margin-bottom: 15px; color: #66ff66; transition: box-shadow 0.3s ease; }
+    /* Blocs futuristes */
+    .block {
+      background-color: rgba(0, 0, 0, 0.6);
+      border: 2px solid #66ff66;
+      border-radius: 10px;
+      padding:15px;
+      margin-bottom: 15px;
+      color: #66ff66;
+      transition: box-shadow 0.3s ease;
+    }
 
-/* Info perso alignée en ligne */
-.personal-info {
-    display: flex;
-    flex-direction: row; /* en ligne */
-    align-items: center; /* verticalement centré */
-    margin-bottom: 20px;
-    gap: 20px; /* espace entre les blocs */
-}
-.info-box {
-    flex: 0 0 auto;
-    border: 1px solid #66ff66;
-    border-radius: 10px;
-    padding: 10px 15px;
-    background-color: rgba(0,0,0,0.5);
-    color: #66ff66;
-    box-shadow: none;
-    justify-content: flex-start;
-    width: auto;
-}
+    /* Info perso alignée en ligne */
+    .personal-info {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      margin-bottom: 20px;
+      gap: 20px;
+    }
+    .info-box {
+      flex: 0 0 auto;
+      border: 1px solid #66ff66;
+      border-radius: 10px;
+      padding: 10px 15px;
+      background-color: rgba(0,0,0,0.5);
+      color: #66ff66;
+      box-shadow: none;
+      justify-content: flex-start;
+      width: auto;
+    }
 
-/* Contact */
-.contact-icons { display: flex; gap: 20px; margin-bottom: 20px; }
-.contact-icons i { font-size: 1.8em; cursor: pointer; transition: all 0.3s ease; color: #ffffff; }
-.contact-icons i:hover { color:#66ff66; transform: scale(1.3); filter: drop-shadow(0 0 5px #66ff66); }
+    /* Contact */
+    .contact-icons {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+    .contact-icons i {
+      font-size: 1.8em;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      color: #ffffff;
+    }
+    .contact-icons i:hover {
+      color:#66ff66;
+      transform: scale(1.3);
+      filter: drop-shadow(0 0 5px #66ff66);
+    }
 
-/* Listes */
-ul { list-style: none; padding-left: 10px; }
-li { margin-bottom: 8px; }
+    /* Listes */
+    ul { list-style: none; padding-left: 10px; }
+    li { margin-bottom: 8px; }
 
-/* Timeline */
-.timeline { display: flex; flex-direction: column; gap: 10px; }
-.timeline-item { padding:10px; border-left: 3px solid #66ff66; margin-left:10px; }
+    /* Timeline */
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .timeline-item {
+      padding:10px;
+      border-left: 3px solid #66ff66;
+      margin-left:10px;
+    }
 
-/* Glow sur hover */
-.block:hover, .info-box:hover { box-shadow: 0 0 8px #66ff66, 0 0 15px rgba(102,255,102,0.4); }
-
-@media(max-width:768px){ .personal-info, .contact-icons { flex-direction: column; } }
-</style>
+    /* Glow sur hover */
+    .block:hover, .info-box:hover {
+      box-shadow: 0 0 8px #66ff66, 0 0 15px rgba(102,255,102,0.4);
+    }
+  </style>
 </head>
 <body>
+  <div id="background"></div>
+  <div class="scanlines"></div>
 
-<div id="background"></div>
-<div class="scanlines"></div>
-
-<div class="container">
-
-<header>
-<h1>Thao LECOMTE</h1>
-<p>1CIEL (Cybersec, Informatique, Electronique)</p>
-</header>
-
-<!-- Informations personnelles -->
-<section>
-<h2><i class="fas fa-user"></i> Informations personnelles</h2>
-<div class="personal-info">
-    <div class="info-box"><strong>Prénom :</strong> Thao</div>
-    <div class="info-box"><strong>Nom :</strong> LECOMTE</div>
-    <div class="info-box"><strong>Âge :</strong> 16 ans</div>
-</div>
-</section>
-
-<!-- Contact -->
-<section>
-<h2><i class="fas fa-address-book"></i> Contact</h2>
-<div class="contact-icons">
-    <i class="fas fa-envelope" onclick="emailPopup()"></i>
-    <i class="fas fa-phone" onclick="phonePopup()"></i>
-    <i class="fab fa-github" onclick="window.open('https://github.com/thaolecomte','_blank')"></i>
-</div>
-</section>
-
-<!-- Formation -->
-<section>
-<h2><i class="fas fa-graduation-cap"></i> Formation</h2>
-<div class="timeline">
-    <div class="timeline-item block"><strong>2024-2026 :</strong> Lycée Charles Tellier</div>
-    <div class="timeline-item block"><strong>2021-2024 :</strong> Collège Charles Lemaitre</div>
-    <div class="timeline-item block"><strong>2020-2021 :</strong> Collège Balzac</div>
-</div>
-</section>
-
-<!-- Certifications -->
-<section>
-<h2><i class="fas fa-certificate"></i> Certifications</h2>
-<div class="block">
-    <ul>
-        <li>Brevet des collèges</li>
-        <li>Pix</li>
-        <li>RootMe</li>
+  <!-- NAVIGATION -->
+  <nav>
+    <div class="logo">CV Thao</div>
+    <i class="fas fa-bars burger" onclick="toggleMenu()"></i>
+    <ul id="nav-links">
+      <li><a href="#infos">Infos</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="#formation">Formation</a></li>
+      <li><a href="#certif">Certifs</a></li>
+      <li><a href="#experiences">Expériences</a></li>
+      <li><a href="#competences">Compétences</a></li>
+      <li><a href="#passions">Passions</a></li>
+      <li><a href="#poste">Poste</a></li>
     </ul>
-</div>
-</section>
+  </nav>
 
-<!-- Expériences professionnelles -->
-<section>
-<h2><i class="fas fa-briefcase"></i> Expériences professionnelles</h2>
-<div class="timeline">
-    <div class="timeline-item block"><strong>2024-2025 :</strong> Formation Pro : Greta Flers, Réseaux & Sécurité | E-Concept Alençon, maintenance électronique, vente & dépannage à domicile</div>
-    <div class="timeline-item block"><strong>2023-2024 :</strong> Stage découverte Réseaux & Sécurité : E2S2 Caen</div>
-</div>
-</section>
+  <div class="container">
+    <header>
+      <h1>Thao LECOMTE</h1>
+      <p>1CIEL (Cybersec, Informatique, Electronique)</p>
+    </header>
 
-<!-- Compétences -->
-<section>
-<h2><i class="fas fa-laptop-code"></i> Compétences</h2>
-<div class="block">
-    <ul>
-        <li>Réseaux & Sécurité</li>
-        <li>Maintenance / Dépannage d'appareils</li>
-        <li>Installation d'OS (dual boot, etc.)</li>
-        <li>Web (Front & Back-end)</li>
-        <li>Pentest web (Red & Blue team)</li>
-        <li>Anglais A2</li>
-        <li>Autonome, énergique, travail en équipe, communication</li>
-    </ul>
-</div>
-</section>
+    <!-- Informations personnelles -->
+    <section id="infos">
+      <h2><i class="fas fa-user"></i> Informations personnelles</h2>
+      <div class="personal-info">
+        <div class="info-box"><strong>Prénom :</strong> Thao</div>
+        <div class="info-box"><strong>Nom :</strong> LECOMTE</div>
+        <div class="info-box"><strong>Âge :</strong> 16 ans</div>
+      </div>
+    </section>
 
-<!-- Passions -->
-<section>
-<h2><i class="fas fa-heart"></i> Passions</h2>
-<div class="block">
-    <ul>
-        <li>Les nouvelles technologies</li>
-        <li>L'horlogerie</li>
-        <li>Sports</li>
-        <li>Visiter le web</li>
-    </ul>
-</div>
-</section>
+    <!-- Contact -->
+    <section id="contact">
+      <h2><i class="fas fa-address-book"></i> Contact</h2>
+      <div class="contact-icons">
+        <i class="fas fa-envelope" onclick="emailPopup()"></i>
+        <i class="fas fa-phone" onclick="phonePopup()"></i>
+        <i class="fab fa-github" onclick="window.open('https://github.com/thaolecomte','_blank')"></i>
+      </div>
+    </section>
 
-<!-- Poste souhaité -->
-<section>
-<h2><i class="fas fa-bullseye"></i> Poste souhaité</h2>
-<div class="block">
-    <ul>
-        <li>Apprentissage</li>
-        <li>Formation en milieu professionnel</li>
-    </ul>
-</div>
-</section>
+    <!-- Formation -->
+    <section id="formation">
+      <h2><i class="fas fa-graduation-cap"></i> Formation</h2>
+      <div class="timeline">
+        <div class="timeline-item block"><strong>2024-2026 :</strong> Lycée Charles Tellier</div>
+        <div class="timeline-item block"><strong>2021-2024 :</strong> Collège Charles Lemaitre</div>
+        <div class="timeline-item block"><strong>2020-2021 :</strong> Collège Balzac</div>
+      </div>
+    </section>
 
-<script>
-// Fond futuriste animé
-const bg = document.getElementById('background');
-for(let i=0;i<40;i++){
-    const line = document.createElement('div');
-    line.classList.add('line');
-    line.style.left = (Math.random()*100) + '%';
-    line.style.animationDuration = (6+Math.random()*4) + 's';
-    bg.appendChild(line);
-}
+    <!-- Certifications -->
+    <section id="certif">
+      <h2><i class="fas fa-certificate"></i> Certifications</h2>
+      <div class="block">
+        <ul>
+          <li>Brevet des collèges</li>
+          <li>Pix</li>
+          <li>RootMe</li>
+        </ul>
+      </div>
+    </section>
 
-// Copier dans le presse-papiers
-function copyToClipboard(text){
-    navigator.clipboard.writeText(text).then(()=>alert(text+' copié !'));
-}
+    <!-- Expériences professionnelles -->
+    <section id="experiences">
+      <h2><i class="fas fa-briefcase"></i> Expériences professionnelles</h2>
+      <div class="timeline">
+        <div class="timeline-item block"><strong>2024-2025 :</strong> Formation Pro : Greta Flers, Réseaux & Sécurité | E-Concept Alençon, maintenance électronique, vente & dépannage à domicile</div>
+        <div class="timeline-item block"><strong>2023-2024 :</strong> Stage découverte Réseaux & Sécurité : E2S2 Caen</div>
+      </div>
+    </section>
 
-// Popup Mail
-function emailPopup(){
-    let popup = document.createElement('div');
-    popup.style.cssText='position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#000;border:2px solid #66ff66;padding:20px;border-radius:10px;color:#66ff66;text-align:center;z-index:1000;';
-    
-    let line=document.createElement('div');
-    line.style.cssText='display:flex;justify-content:center;align-items:center;gap:10px;';
-    line.innerHTML='<span>Email : thaolecomte09@gmail.com</span>';
-    let copyBtn=document.createElement('button');
-    copyBtn.textContent='Copier';
-    copyBtn.style.cssText='padding:5px 10px;cursor:pointer;border:1px solid #66ff66;border-radius:5px;background:#000;color:#66ff66;';
-    copyBtn.onclick=()=>copyToClipboard('thaolecomte09@gmail.com');
-    line.appendChild(copyBtn);
-    popup.appendChild(line);
+    <!-- Compétences -->
+    <section id="competences">
+      <h2><i class="fas fa-laptop-code"></i> Compétences</h2>
+      <div class="block">
+        <ul>
+          <li>Réseaux & Sécurité</li>
+          <li>Maintenance / Dépannage d'appareils</li>
+          <li>Installation d'OS (dual boot, etc.)</li>
+          <li>Web (Front & Back-end)</li>
+          <li>Pentest web (Red & Blue team)</li>
+          <li>Anglais A2</li>
+          <li>Autonome, énergique, travail en équipe, communication</li>
+        </ul>
+      </div>
+    </section>
 
-    let question=document.createElement('p');
-    question.textContent='Accéder à mail ?';
-    question.style.margin='10px 0';
-    popup.appendChild(question);
+    <!-- Passions -->
+    <section id="passions">
+      <h2><i class="fas fa-heart"></i> Passions</h2>
+      <div class="block">
+        <ul>
+          <li>Les nouvelles technologies</li>
+          <li>L'horlogerie</li>
+          <li>Sports</li>
+          <li>Visiter le web</li>
+        </ul>
+      </div>
+    </section>
 
-    let btnDiv=document.createElement('div');
-    btnDiv.style.cssText='display:flex;justify-content:center;gap:10px;';
-    let yesBtn=document.createElement('button');
-    yesBtn.textContent='Oui';
-    yesBtn.style.cssText='padding:5px 10px;cursor:pointer;border:1px solid #66ff66;border-radius:5px;background:#000;color:#66ff66;';
-    yesBtn.onclick=()=>{ window.open('mailto:thaolecomte09@gmail.com','_blank'); document.body.removeChild(popup); };
-    let noBtn=document.createElement('button');
-    noBtn.textContent='Non';
-    noBtn.style.cssText='padding:5px 10px;cursor:pointer;border:1px solid #66ff66;border-radius:5px;background:#000;color:#66ff66;';
-    noBtn.onclick=()=>{ document.body.removeChild(popup); };
-    btnDiv.appendChild(yesBtn);
-    btnDiv.appendChild(noBtn);
-    popup.appendChild(btnDiv);
+    <!-- Poste souhaité -->
+    <section id="poste">
+      <h2><i class="fas fa-bullseye"></i> Poste souhaité</h2>
+      <div class="block">
+        <ul>
+          <li>Apprentissage</li>
+          <li>Formation en milieu professionnel</li>
+        </ul>
+      </div>
+    </section>
+  </div>
 
-    document.body.appendChild(popup);
-}
+  <script>
+    // Fond futuriste animé
+    const bg = document.getElementById('background');
+    for(let i=0;i<40;i++){
+      const line = document.createElement('div');
+      line.classList.add('line');
+      line.style.left = (Math.random()*100) + '%';
+      line.style.animationDuration = (6+Math.random()*4) + 's';
+      bg.appendChild(line);
+    }
 
-// Popup Téléphone
-function phonePopup(){
-    let popup = document.createElement('div');
-    popup.style.cssText='position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#000;border:2px solid #66ff66;padding:20px;border-radius:10px;color:#66ff66;text-align:center;z-index:1000;';
-    
-    let line=document.createElement('div');
-    line.style.cssText='display:flex;justify-content:center;align-items:center;gap:10px;';
-    line.innerHTML='<span>Téléphone : 0769852891</span>';
-    let copyBtn=document.createElement('button');
-    copyBtn.textContent='Copier';
-    copyBtn.style.cssText='padding:5px 10px;cursor:pointer;border:1px solid #66ff66;border-radius:5px;background:#000;color:#66ff66;';
-    copyBtn.onclick=()=>copyToClipboard('0769852891');
-    line.appendChild(copyBtn);
-    popup.appendChild(line);
+    // Menu burger
+    function toggleMenu(){
+      document.getElementById('nav-links').classList.toggle('active');
+    }
 
-    let question=document.createElement('p');
-    question.textContent='Voulez-vous appeler ?';
-    question.style.margin='10px 0';
-    popup.appendChild(question);
+    // Copier dans le presse-papiers
+    function copyToClipboard(text){
+      navigator.clipboard.writeText(text).then(()=>alert(text+' copié !'));
+    }
 
-    let btnDiv=document.createElement('div');
-    btnDiv.style.cssText='display:flex;justify-content:center;gap:10px;';
-    let yesBtn=document.createElement('button');
-    yesBtn.textContent='Oui';
-    yesBtn.style.cssText='padding:5px 10px;cursor:pointer;border:1px solid #66ff66;border-radius:5px;background:#000;color:#66ff66;';
-    yesBtn.onclick=()=>{ window.open('tel:0769852891','_self'); document.body.removeChild(popup); };
-    let noBtn=document.createElement('button');
-    noBtn.textContent='Non';
-    noBtn.style.cssText='padding:5px 10px;cursor:pointer;border:1px solid #66ff66;border-radius:5px;background:#000;color:#66ff66;';
-    noBtn.onclick=()=>{ document.body.removeChild(popup); };
-    btnDiv.appendChild(yesBtn);
-    btnDiv.appendChild(noBtn);
-    popup.appendChild(btnDiv);
+    // Popup Mail
+    function emailPopup(){
+      let popup = document.createElement('div');
+      popup.style.cssText='position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#000;border:2px solid #66ff66;padding:20px;border-radius:10px;color:#66ff66;text-align:center;z-index:1000;';
+      let line=document.createElement('div');
+      line.style.cssText='display:flex;justify-content:center;align-items:center;gap:10px;';
+      line.innerHTML='<span>Email : thaolecomte09@gmail.com</span>';
+      let copyBtn=document.createElement('button');
+      copyBtn.textContent='Copier';
+      copyBtn.style.cssText='padding:5px 10px;cursor:pointer;border:1px solid #66ff66;border-radius:5px;background:#000;color:#66ff66;';
+      copyBtn.onclick=()=>copyToClipboard('thaolecomte09@gmail.com');
+      line.appendChild(copyBtn);
+      popup.appendChild(line);
+      let question=document.createElement('p');
+      question.textContent='Accéder à mail ?';
+      question.style.margin='10px 0';
+      popup.appendChild(question);
+      let btnDiv=document.createElement('div');
+      btnDiv.style.cssText='display:flex;justify-content:center;gap:10px;';
+      let yesBtn=document.createElement('button');
+      yesBtn.textContent='Oui';
+      yesBtn.style.cssText='padding:5px 10px;cursor:pointer;border:1px solid #66ff66;border-radius:5px;background:#000;color:#66ff66;';
+      yesBtn.onclick=()=>{ window.open('mailto:thaolecomte09@gmail.com','_blank'); document.body.removeChild(popup); };
+      let noBtn=document.createElement('button');
+      noBtn.textContent='Non';
+      noBtn.style.cssText='padding:5px 10px;cursor:pointer;border:1px solid #66ff66;border-radius:5px;background:#000;color:#66ff66;';
+      noBtn.onclick=()=>{ document.body.removeChild(popup); };
+      btnDiv.appendChild(yesBtn);
+      btnDiv.appendChild(noBtn);
+      popup.appendChild(btnDiv);
+      document.body.appendChild(popup);
+    }
 
-    document.body.appendChild(popup);
-}
-</script>
-
+    // Popup Téléphone
+    function phonePopup(){
+      let popup = document.createElement('div');
+      popup.style.cssText='position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#000;border:2px solid #66ff66;padding:20px;border-radius:10px;color:#66ff66;text-align:center;z-index:1000;';
+      let line=document.createElement('div');
+      line.style.cssText='display:flex;justify-content:center;align-items:center;gap:10px;';
+      line.innerHTML='<span>Téléphone : 0769852891</span>';
+      let copyBtn=document.createElement('button');
+      copyBtn.textContent='Copier';
+      copyBtn.style.cssText='padding:5px 10px;cursor:pointer;border:1px solid #66ff66;border-radius:5px;background:#000;color:#66ff66;';
+      copyBtn.onclick=()=>copyToClipboard('0769852891');
+      line.appendChild(copyBtn);
+      popup.appendChild(line);
+      let question=document.createElement('p');
+      question.textContent='Voulez-vous appeler ?';
+      question.style.margin='10px 0';
+      popup.appendChild(question);
+      let btnDiv=document.createElement('div');
+      btnDiv.style.cssText='display:flex;justify-content:center;gap:10px;';
+      let yesBtn=document.createElement('button');
+      yesBtn.textContent='Oui';
+      yesBtn.style.cssText='padding:5px 10px;cursor:pointer;border:1px solid #66ff66;border-radius:5px;background:#000;color:#66ff66;';
+      yesBtn.onclick=()=>{ window.open('tel:0769852891','_self'); document.body.removeChild(popup); };
+      let noBtn=document.createElement('button');
+      noBtn.textContent='Non';
+      noBtn.style.cssText='padding:5px 10px;cursor:pointer;border:1px solid #66ff66;border-radius:5px;background:#000;color:#66ff66;';
+      noBtn.onclick=()=>{ document.body.removeChild(popup); };
+      btnDiv.appendChild(yesBtn);
+      btnDiv.appendChild(noBtn);
+      popup.appendChild(btnDiv);
+      document.body.appendChild(popup);
+    }
+  </script>
 </body>
 </html>
